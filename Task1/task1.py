@@ -1,5 +1,8 @@
 import requests
 
+# Note: In this project, I'm using the 'py' command in the terminal to execute Python scripts and manage packages. 
+# If you're accustomed to using 'python', 'pip', or 'pip3', please use 'py' instead for this project.
+
 def get_weather(city):
     api_key = "22ef52c6707559f8d3fe948e2ef01fbb"
     base_url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}"
