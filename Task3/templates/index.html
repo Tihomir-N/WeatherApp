@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Weather App</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+
+<body>
+    <div class="d-flex justify-content-center align-items-center vh-100">
+        <div class="card text-white">
+            <div class="card-body">
+                <form method="POST">
+                    <div class="form-group weather__search d-flex align-items-center">
+                        <div class="input-group">
+                            <input type="text" id="city" name="city" class="form-control mr-2" placeholder="Search for a city...">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <input type="submit" value="Get Weather" class="btn btn-light">
+                        </div>
+                    </div>
+                </form>
+                <div class="city_links">
+                    <a href="/weather/New York">New York</a>
+                    <a href="/weather/London">London</a>
+                    <a href="/weather/Paris">Paris</a>
+                    <a href="/weather/Tokyo">Tokyo</a>
+                    <a href="/weather/Sydney">Sydney</a>
+                </div>
+                {% if error %}
+                <div class="alert alert-danger mt-3" role="alert">
+                    {{ error }}
+                </div>
+                {% endif %}
+                <div class="weather__body">
+                    {% if city %}
+                    <h1 class="weather__city">{{ city }}</h1>
+                    <div class="weather__datetime">
+                    </div>
+                    <div class="weather__forecast">{{ weather }}</div>
+                    <div class="weather__icon">
+                        <img src="{{ icon_url }}" />
+                    </div>
+                    <p class="weather__temperature">
+                        {{ temperature_c }}°C
+                    </p>
+                    <div class="weather__minmax">
+                        <p>Min: {{ temp_min }}°C</p>
+                        <p>Max: {{ temp_max }}°C</p>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="weather__info">
+                    <div class="weather__card">
+                        <i class="fas fa-thermometer-full"></i>
+                        <div>
+                            <p>Real Feel</p>
+                            <p class="weather__realfeel">{{ feels_like }}</p>
+                        </div>
+                    </div>
+                    <div class="weather__card">
+                        <i class="fas fa-tint"></i>
+                        <div>
+                            <p>Humidity</p>
+                            <p class="weather__humidity">{{ humidity }}</p>
+                        </div>
+                    </div>
+                    <div class="weather__card">
+                        <i class="fas fa-wind"></i>
+                        <div>
+                            <p>Wind</p>
+                            <p class="weather__wind">{{ wind }}</p>
+                        </div>
+                    </div>
+                    <div class="weather__card">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <div>
+                            <p>Pressure</p>
+                            <p class="weather__pressure">{{ pressure }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='index.js') }}"></script>
+</body>
+
+</html>
