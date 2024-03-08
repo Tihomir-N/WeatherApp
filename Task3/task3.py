@@ -26,7 +26,7 @@ def get_weather(city):
     humidity = data['main']['humidity']
     pressure = data['main']['pressure']
     wind = data['wind']['speed']
-    feels_like = data['main']['feels_like']
+    feels_like = convert_to_celsius(data['main']['feels_like'])
     icon_url = get_weather_icon_url(data['weather'][0]['icon'])
     
     return weather, temperature_c, humidity, temp_min, temp_max, icon_url, pressure, wind, feels_like
@@ -42,15 +42,31 @@ def weather(city=None):
         else:
             error = "Please enter a city name."
 
+    cities = ['New York', 'London', 'Paris', 'Tokyo', 'Sydney']
+    weather_data = {}
+    for default_city in cities:
+        result = get_weather(default_city)
+        if result:
+            weather_data[default_city] = result[1]
+
+    if weather_data:
+        coldest_city = min(weather_data, key=weather_data.get)
+        avg_temperature = round(sum(weather_data.values()) / len(weather_data), 1)
+
     if city:
         result = get_weather(city)
         if result is None:
             error = "Please enter a valid city name."
         else:
             weather, temperature_c, humidity, temp_min, temp_max, icon_url, pressure, wind, feels_like = result
-            return render_template('index.html', city=city, weather=weather, temperature_c=temperature_c, humidity=humidity, temp_min=temp_min, temp_max=temp_max, icon_url=icon_url, wind=wind, pressure=pressure, feels_like=feels_like)
+            return render_template('index.html', city=city, weather=weather, temperature_c=temperature_c, humidity=humidity, temp_min=temp_min, temp_max=temp_max, icon_url=icon_url, wind=wind, pressure=pressure, feels_like=feels_like, coldest_city=coldest_city, avg_temperature=avg_temperature)
+        
+    
 
-    return render_template('index.html', error=error)
+        print(f"Coldest City: {coldest_city}")
+        print(f"Average Temperature: {avg_temperature}°C")
+
+    return render_template('index.html', error=error, coldest_city=coldest_city, avg_temperature=avg_temperature)
 
 if __name__ == '__main__':
     app.run(debug=True)

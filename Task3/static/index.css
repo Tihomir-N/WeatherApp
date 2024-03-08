@@ -14,6 +14,7 @@ body {
 }
 .card {
     height: fit-content;
+    margin-top: 5rem;
     width: 40%;
     background: linear-gradient(to right, #171717, #171717);
 }
@@ -149,4 +150,12 @@ input::placeholder {
 
 .city_links a:hover::after {
     opacity: 1;
+}
+
+.coldest_city {
+    margin-top: 20px; /* Add margin top */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
