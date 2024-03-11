@@ -24,11 +24,6 @@ style="background-image: url('{{ image_url }}');"
             <input type="text" name="city" placeholder="Enter city">
             <button type="submit">Search</button>
         </form>
-        {% if description == 'Unknown' %}
-        <h2 style="margin-top: 5rem; color: white; text-align: center;">
-            Enter a valid city name!
-        </h2> 
-        {% else %}
         <div class="weather">
             <div class="left">
                 <h2>{{ temp }}&#176; C</h2>
@@ -44,8 +39,14 @@ style="background-image: url('{{ image_url }}');"
                 </div>
             </div>
         </div>
-        {% endif %}
     </div>
+    {% if exception_occurred %}
+    <script>
+        window.onload = function() {
+            alert("City information is not available")
+        }
+    </script>
+    {% endif %}
 </body>
 
 </html>
