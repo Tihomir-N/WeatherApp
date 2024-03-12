@@ -1,6 +1,8 @@
 from django.shortcuts import render
 import requests
 import datetime
+from django.http import HttpResponse, HttpRequest
+from .models import Weather
 
 def get_weather_data(url, params):
     try:
@@ -75,6 +77,10 @@ def home(request):
         description = 'Unknown'
         icon = 'unknown'
         temp = 0
+    else:
+        weather_info = Weather(city=city, description=description, icon=icon, temp=temp)
+        print(weather_info)
+        weather_info.save()
 
     image_url = get_city_images(city)
     day = datetime.date.today()

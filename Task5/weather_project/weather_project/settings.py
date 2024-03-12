@@ -37,8 +37,21 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'weather_app',
+    'weather_app'
 ]
+
+SHARED_APPS = (
+    'django_tenants',
+    'weather_app',
+    'django.contrib.contenttypes',
+
+    # everything below here is optional
+    'django.contrib.auth',
+    'django.contrib.sessions',
+    'django.contrib.sites',
+    'django.contrib.messages',
+    'django.contrib.admin',
+)
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -76,8 +89,12 @@ WSGI_APPLICATION = 'weather_project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'WeatherDB',
+        'USER': 'postgres',
+        'PASSWORD': '1588',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
