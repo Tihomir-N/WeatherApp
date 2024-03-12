@@ -35,9 +35,39 @@ def get_city_images(city):
 def build_request_url_openWeatherMap(city):
     return f'http://api.openweathermap.org/data/2.5/weather?q={city}&appid=45f233f948350a497d03aead20ce1b0d'
 
+def find_coldest_city(cities):
+    min_temp = float('inf')
+    min_city = ''
+    PARAMS = {'units':'metric'}
+
+    for city in cities:
+        url = build_request_url_openWeatherMap(city)
+        _, _, temp = get_weather_data(url, PARAMS)
+
+        if temp < min_temp:
+            min_temp = temp
+            min_city = city
+
+    return min_city
+
+def calculate_average_temperature(cities):
+    total_temp = 0
+    PARAMS = {'units':'metric'}
+
+    for city in cities:
+        url = build_request_url_openWeatherMap(city)
+        _, _, temp = get_weather_data(url, PARAMS)
+
+        total_temp += temp
+
+    avg_temp = total_temp / len(cities)
+
+    return avg_temp
+
+
 def home(request):
     PARAMS = {'units':'metric'}
-    city = request.POST.get('city', 'London')
+    city = request.POST.get('city') or request.GET.get('city', 'London')
     url = build_request_url_openWeatherMap(city)
     
     description, icon, temp = get_weather_data(url, PARAMS)
@@ -49,11 +79,18 @@ def home(request):
     image_url = get_city_images(city)
     day = datetime.date.today()
 
+    cities = ['London', 'Paris', 'Berlin', 'Madrid', 'Rome']  # Add your cities here
+    avg_temp = calculate_average_temperature(cities)
+    min_city = find_coldest_city(cities)
+
     return render(request, 'weather_app/index.html',{
         'description': description,
         'icon': icon,
         'temp': temp,
         'day': day,
         'city': city,
-        'image_url': image_url
+        'image_url': image_url,
+        'avg_temp': avg_temp,
+        'min_city': min_city,
+        'cities': cities  # Pass the cities to the template
     })
