@@ -8,6 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="{% static 'style.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{% static 'script.js' %}"></script>
 </head>
 
 <body {% if exception_occurred %}
@@ -33,6 +35,7 @@ style="background-image: url('{{ image_url }}');"
             <div class="left">
                 <h2>{{ temp }}° C</h2>
                 <h3>{{ city }}</h3>
+                <button id="refreshButton">Refresh</button>
             </div>
             <div class="right">
                 <div class="icon">
@@ -52,6 +55,32 @@ style="background-image: url('{{ image_url }}');"
                 <li><a href="?city={{ city }}">{{ city }}</a></li>
                 {% endfor %}
             </ul>
+        </div>
+
+        <div class="recent-weather">
+            <h2>Recent Weather Stats</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>City</th>
+                            <th>Description</th>
+                            <th>Temperature (°C)</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for weather_stat in recent_weather_stats %}
+                        <tr>
+                            <td>{{ weather_stat.city }}</td>
+                            <td>{{ weather_stat.description }}</td>
+                            <td>{{ weather_stat.temp }}</td>
+                            <td>{{ weather_stat.date }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </body>

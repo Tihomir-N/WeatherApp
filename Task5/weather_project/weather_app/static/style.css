@@ -40,7 +40,7 @@ padding: 2rem;
 border: 2px solid var(--transp-white-2);
 border-radius: 10px;
 color:rgb(5,41,51);
-height: 600px;
+height: fit-content;
 }
 input, .btn ::placeholder{
 background-color: transparent;
@@ -171,4 +171,46 @@ align-items: center;
 
 cities {
   margin-top: 3rem;
+}
+
+.recent-weather {
+  margin-top: 30px;
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+thead {
+  background-color: #f2f2f2;
+}
+
+th, td {
+  padding: 12px 15px;
+  text-align: left;
+}
+
+th {
+  font-weight: bold;
+  color: #333;
+}
+
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+tr:hover {
+  background-color: #f2f2f2;
+}
+
+@media (max-width: 768px) {
+  th, td {
+      padding: 8px 10px;
+  }
 }

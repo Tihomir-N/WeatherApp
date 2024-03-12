@@ -1,7 +1,6 @@
 from django.shortcuts import render
 import requests
 import datetime
-from django.http import HttpResponse, HttpRequest
 from .models import Weather
 
 def get_weather_data(url, params):
@@ -66,6 +65,10 @@ def calculate_average_temperature(cities):
 
     return avg_temp
 
+def get_recent_weather_stats():
+    weather_data = Weather.objects.all()
+    weather_data = weather_data.order_by('-date')[:5]
+    return weather_data
 
 def home(request):
     PARAMS = {'units':'metric'}
@@ -88,6 +91,7 @@ def home(request):
     cities = ['London', 'Paris', 'Berlin', 'Madrid', 'Rome']  # Add your cities here
     avg_temp = calculate_average_temperature(cities)
     min_city = find_coldest_city(cities)
+    recent_weather_stats = get_recent_weather_stats()
 
     return render(request, 'weather_app/index.html',{
         'description': description,
@@ -98,5 +102,6 @@ def home(request):
         'image_url': image_url,
         'avg_temp': avg_temp,
         'min_city': min_city,
-        'cities': cities  # Pass the cities to the template
+        'cities': cities,
+        'recent_weather_stats': recent_weather_stats
     })
