@@ -2,6 +2,7 @@ from django.shortcuts import render
 import requests
 import datetime
 from .models import Weather
+from django.http import JsonResponse
 
 def get_weather_data(url, params):
     try:
@@ -82,7 +83,6 @@ def home(request):
         temp = 0
     else:
         weather_info = Weather(city=city, description=description, icon=icon, temp=temp)
-        print(weather_info)
         weather_info.save()
 
     image_url = get_city_images(city)
@@ -93,15 +93,26 @@ def home(request):
     min_city = find_coldest_city(cities)
     recent_weather_stats = get_recent_weather_stats()
 
-    return render(request, 'weather_app/index.html',{
-        'description': description,
-        'icon': icon,
-        'temp': temp,
-        'day': day,
-        'city': city,
-        'image_url': image_url,
-        'avg_temp': avg_temp,
-        'min_city': min_city,
-        'cities': cities,
-        'recent_weather_stats': recent_weather_stats
-    })
+    if request.method == 'GET' and 'refresh' in request.GET:
+        print('Refreshing...')
+        return JsonResponse({
+            'description': description,
+            'icon': icon,
+            'temp': temp,
+            'day': day,
+            'city': city,
+            'recent_weather_stats': list(recent_weather_stats.values())
+        })
+    else:
+        return render(request, 'weather_app/index.html',{
+            'description': description,
+            'icon': icon,
+            'temp': temp,
+            'day': day,
+            'city': city,
+            'image_url': image_url,
+            'avg_temp': avg_temp,
+            'min_city': min_city,
+            'cities': cities,
+            'recent_weather_stats': recent_weather_stats
+        })
