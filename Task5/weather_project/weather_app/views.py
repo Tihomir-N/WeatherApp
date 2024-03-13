@@ -3,7 +3,6 @@ import requests
 import datetime
 from .models import Weather
 from django.http import JsonResponse
-from django.http import QueryDict
 
 def get_weather_data(url, params):
     try:
@@ -19,7 +18,7 @@ def get_weather_data(url, params):
         return None, None, None
 
 def get_city_images(city):
-    GOOGLE_API_KEY = 'AIzaSyA0GHHkjzqWHzBsIAA46m9QBavwd0HbS64'
+    GOOGLE_API_KEY = 'AIzaSyDeOG-bIle69JmMD7tulwLdOKgknRah2N4'
     SEARCH_ENGINE_ID = '9732b7cac993c4c82'
 
     query = city + " 1920x1080"
@@ -65,7 +64,7 @@ def calculate_average_temperature(cities):
 
     avg_temp = total_temp / len(cities)
 
-    return avg_temp
+    return round(avg_temp)
 
 def get_recent_weather_stats():
     weather_data = Weather.objects.all()
@@ -73,7 +72,6 @@ def get_recent_weather_stats():
     return weather_data
 
 def home(request):
-    print(request)
     PARAMS = {'units':'metric'}
     city = request.POST.get('city') or request.GET.get('city', 'London') or 'London'
     url = build_request_url_openWeatherMap(city)
@@ -90,13 +88,12 @@ def home(request):
     image_url = get_city_images(city)
     day = datetime.date.today()
 
-    cities = ['London', 'Paris', 'Berlin', 'Madrid', 'Rome']  # Add your cities here
+    cities = ['London', 'Paris', 'Berlin', 'Madrid', 'Rome']
     avg_temp = calculate_average_temperature(cities)
     min_city = find_coldest_city(cities)
     recent_weather_stats = get_recent_weather_stats()
 
     if request.method == 'GET' and 'refresh' in request.GET:
-        print('Refreshing...')
         return JsonResponse({
             'description': description,
             'icon': icon,

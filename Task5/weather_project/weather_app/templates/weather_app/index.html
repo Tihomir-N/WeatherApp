@@ -22,7 +22,7 @@ style="background-image: url('{{ image_url }}');"
         <form method="POST" id="searchForm">
             {% csrf_token %}
             <input type="text" name="city" id="cityInput" placeholder="Enter city">
-            <button type="submit">Search</button>
+            <button type="submit" class="custom-button">Search</button>
         </form>
         {% if description == 'Unknown' %}
         <h2 style="margin-top: 5rem; color: white; text-align: center;">
@@ -31,9 +31,9 @@ style="background-image: url('{{ image_url }}');"
         {% else %}
         <div class="weather">
             <div class="left">
-                <h2>{{ temp }}° C</h2>
+                <h1 style="text-align: left;">{{ temp }}° C</h1>
                 <h3>{{ city }}</h3>
-                <button id="refreshButton">Refresh</button>
+                <button id="refreshButton" class="custom-button">Refresh</button>
             </div>
             <div class="right">
                 <div class="icon">
@@ -53,6 +53,8 @@ style="background-image: url('{{ image_url }}');"
                 <li><a href="?city={{ city }}">{{ city }}</a></li>
                 {% endfor %}
             </ul>
+            <p>Coldest city: {{ min_city }}</p>
+            <p>Average temp: {{ avg_temp }}°C</p>
         </div>
 
         <div class="recent-weather">
