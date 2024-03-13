@@ -1,18 +1,19 @@
 $(document).ready(function () {
     $('#refreshButton').click(function (e) {
-        e.preventDefault();  // Prevent the default form submission behavior
-        alert('Refreshing weather data...');
-        // Send an AJAX request to fetch updated weather data
+        e.preventDefault();
+
+        if (!window.location.href.includes('city')) {
+            window.location.href = window.location.href + '?city=London';
+        }
         $.ajax({
             type: 'GET',
-            url: window.location.href + '?refresh=true',  // Add the refresh parameter
+            url: window.location.href + '&refresh=true',
             success: function (data) {
-                // Update the weather data displayed on the page
                 $('.weather .left h2').text(data.temp + '° C');
                 $('.weather .left h3').text(data.city);
                 $('.weather .condition p:first-child').text(data.description);
-                $('.weather .condition p:last-child').text(data.date);
-                $('.weather .icon p:img').src(data.icon);
+                $('.weather .condition p:last-child').text(data.day);
+                $('.weather .icon img').attr('src', 'http://openweathermap.org/img/w/' + data.icon + '.png');
 
                 var tbody = $('#weatherTableBody');
                 tbody.empty();
@@ -30,6 +31,22 @@ $(document).ready(function () {
                 console.error('Error refreshing weather data:', errorThrown);
             }
         });
+    });
+});
+
+$(document).ready(function () {
+    // Set initial action attribute of the form to the current URL with city parameter
+    var currentUrl = window.location.href;
+    $('#searchForm').attr('action', currentUrl);
+
+    // Intercept form submission
+    $('#searchForm').submit(function (e) {
+        // Get the value of the city input
+        var city = $('#cityInput').val();
+        
+        // Update the action attribute with the current city value
+        var newUrl = window.location.origin + window.location.pathname + '?city=' + encodeURIComponent(city);
+        $(this).attr('action', newUrl);
     });
 });
 

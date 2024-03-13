@@ -19,9 +19,9 @@ style="background-image: url('{{ image_url }}');"
     <div class="container">
         <h1>Weather App</h1>
 
-        <form method="POST">
+        <form method="POST" id="searchForm">
             {% csrf_token %}
-            <input type="text" name="city" placeholder="Enter city">
+            <input type="text" name="city" id="cityInput" placeholder="Enter city">
             <button type="submit">Search</button>
         </form>
         {% if description == 'Unknown' %}

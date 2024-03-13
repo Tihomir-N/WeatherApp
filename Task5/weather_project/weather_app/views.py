@@ -3,6 +3,7 @@ import requests
 import datetime
 from .models import Weather
 from django.http import JsonResponse
+from django.http import QueryDict
 
 def get_weather_data(url, params):
     try:
@@ -72,8 +73,9 @@ def get_recent_weather_stats():
     return weather_data
 
 def home(request):
+    print(request)
     PARAMS = {'units':'metric'}
-    city = request.POST.get('city') or request.GET.get('city', 'London')
+    city = request.POST.get('city') or request.GET.get('city', 'London') or 'London'
     url = build_request_url_openWeatherMap(city)
     
     description, icon, temp = get_weather_data(url, PARAMS)
