@@ -16,7 +16,7 @@ def get_weather_data(url, params):
         return None, None, None
 
 def get_city_images(city):
-    GOOGLE_API_KEY = 'AIzaSyA0GHHkjzqWHzBsIAA46m9QBavwd0HbS64'
+    GOOGLE_API_KEY = 'AIzaSyDeOG-bIle69JmMD7tulwLdOKgknRah2N4'
     SEARCH_ENGINE_ID = '9732b7cac993c4c82'
 
     query = city + " 1920x1080"

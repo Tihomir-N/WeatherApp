@@ -22,7 +22,7 @@ style="background-image: url('{{ image_url }}');"
         <form method="POST">
             {% csrf_token %}
             <input type="text" name="city" placeholder="Enter city">
-            <button type="submit">Search</button>
+            <button type="submit" class="custom-button">Search</button>
         </form>
         {% if description == 'Unknown' %}
         <h2 style="margin-top: 5rem; color: white; text-align: center;">
@@ -52,6 +52,8 @@ style="background-image: url('{{ image_url }}');"
                 <li><a href="?city={{ city }}">{{ city }}</a></li>
                 {% endfor %}
             </ul>
+            <p>Coldest city: {{ min_city }}</p>
+            <p>Average temp: {{ avg_temp }}°C</p>
         </div>
     </div>
 </body>
