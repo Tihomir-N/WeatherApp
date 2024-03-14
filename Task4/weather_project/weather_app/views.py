@@ -92,5 +92,5 @@ def home(request):
         'image_url': image_url,
         'avg_temp': avg_temp,
         'min_city': min_city,
-        'cities': cities  # Pass the cities to the template
+        'cities': cities
     })

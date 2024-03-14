@@ -8,8 +8,7 @@
 }
 
 body {
-    /* Blue gradient background */
-    color: white;  /* Make text color white for better contrast */
+    color: white;
     background: white;
 }
 .card {
@@ -24,7 +23,6 @@ input {
     background: #1e1e1e !important;
     outline: none !important;
     color: #fff !important;
-    /* padding: 0.5rem 2.5rem !important; */
     border-radius: 5px !important;
 }
 
@@ -136,7 +134,7 @@ input::placeholder {
     transform: scaleX(1);
 }
 
-/* Additional style for links to make them more visible */
+
 .city_links a::after {
     content: attr(data-text);
     position: absolute;
@@ -153,7 +151,7 @@ input::placeholder {
 }
 
 .coldest_city {
-    margin-top: 20px; /* Add margin top */
+    margin-top: 20px;
     display: flex;
     justify-content: center;
     align-items: center;

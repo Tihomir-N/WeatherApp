@@ -68,7 +68,7 @@ def calculate_average_temperature(cities):
 
 def get_recent_weather_stats():
     weather_data = Weather.objects.all()
-    weather_data = weather_data.order_by('-date')[:5]
+    weather_data = weather_data.order_by('-date')[:10]
     return weather_data
 
 def home(request):

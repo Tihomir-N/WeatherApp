@@ -28,7 +28,6 @@ grid-gap:3%;
 }
 .container{
 width: 50%;
-/* background-color: #77ACF1; */
 background: var(--transp-white-2);
 backdrop-filter: blur(10px);
 margin: 5rem auto;
@@ -39,10 +38,7 @@ color:rgb(5,41,51);
 height: fit-content;
 }
 input, .btn ::placeholder{
-background-color: transparent;
-
-  /* color: var(--off-white);
-  border-bottom: 2px solid var(--transp-white-1);   */ 
+background-color: transparent;  
 padding: .5rem;
 border-radius: 10px;
 outline: none;
@@ -50,8 +46,6 @@ border: 1px solid white;
 }
 .btn{
 padding: .5rem 1rem;
-/* background-color:#F0EBCC ;
-color:#04009A ; */
 border:2px solid #04009A ;
 cursor:pointer;
 transition:.3s;
@@ -98,25 +92,19 @@ height:220px;
 padding-right: 3rem;
 width:100%;
 border-radius:0 10px 10px 0;
-/*   margin-left:.5rem; */
   line-height:2.5;
   background: var(--transp-white-2);
 backdrop-filter: blur(10px);
 
 }
 .icon{
-
-/* background:#d8c6c6; */
 height:85px;
 padding: .5rem;
 border-radius:0 10px 0 0;
 color:#04009A;
-/* filter: drop-shadow(0 1.8em 3.7em var(--shadow)); */
 }
 .condition{
 height:135px;
-    /* background:#292929 ; */
-/* padding: .5rem; */
 border-radius:0 0 10px;
 color:rgb(5,41,51);
 font-size: 20px;
@@ -177,8 +165,8 @@ align-items: center;
 }
 
 .custom-button {
-  background-color: rgba(255, 255, 255, 0.8); /* White with 80% opacity */
-  color: #333; /* Text color */
+  background-color: rgba(255, 255, 255, 0.8);
+  color: #333;
   border: none;
   padding: 10px 20px;
   border-radius: 5px;
@@ -186,9 +174,8 @@ align-items: center;
   transition: background-color 0.3s;
 }
 
-/* Button hover style */
 .custom-button:hover {
-  background-color: rgba(255, 255, 255, 0.9); /* Slightly darker white on hover */
+  background-color: rgba(255, 255, 255, 0.9);
 }
 
 .cities {
