@@ -62,7 +62,7 @@ def calculate_average_temperature(cities):
 
     avg_temp = total_temp / len(cities)
 
-    return avg_temp
+    return round(avg_temp)
 
 
 def home(request):
