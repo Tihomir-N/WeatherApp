@@ -1,7 +1,16 @@
 import requests
+import random
 
-# Note: In this project, I'm using the 'py' command in the terminal to execute Python scripts and manage packages. 
-# If you're accustomed to using 'python', 'pip', or 'pip3', please use 'py' instead for this project.
+
+
+def get_cities():
+    api_url = 'https://api.api-ninjas.com/v1/city?min_population={}&limit=100'.format('1000000')
+    response = requests.get(api_url, headers={'X-Api-Key': '8UbplA20/DRBsYdkZtz2sw==Lty5K8snkj93nyuo'})
+    if response.status_code == requests.codes.ok:
+        cities = response.json()
+        return random.sample([city["name"] for city in cities], 5)
+    else:
+        print("Error:", response.status_code, response.text)
 
 def get_weather(city):
     api_key = "22ef52c6707559f8d3fe948e2ef01fbb"
@@ -18,14 +27,20 @@ def get_weather(city):
         humidity = data['main']['humidity']
         return weather, temperature_c, humidity
 
-cities = ["Sofia", "London", "New York", "Tokyo", "Sydney"]
-weather_data = {}
+cities = []
 
-for city in cities:
-    result = get_weather(city)
-    if result is not None:
-        weather, temperature_c, humidity = result
-        weather_data[city] = [weather, temperature_c, humidity]
+def get_random_cities_weather(num_cities=5):
+    cities = get_cities()
+    random_cities = random.sample(cities, num_cities)
+    weather_data = {}
+    for city in random_cities:
+        result = get_weather(city)
+        if result is not None:
+            weather, temperature_c, humidity = result
+            weather_data[city] = [weather, temperature_c, humidity]
+            print(f"Weather in {city}: {weather}, Temperature: {temperature_c}°C, Humidity: {humidity}%")
+    return weather_data
+weather_data = get_random_cities_weather(5)
 
 coldest_city = min(weather_data, key=lambda x: weather_data[x][1])
 avg_temperature = round(sum([data[1] for data in weather_data.values()]) / len(weather_data),1)
