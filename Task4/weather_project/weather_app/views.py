@@ -1,6 +1,16 @@
 from django.shortcuts import render
 import requests
 import datetime
+import random
+
+def get_random_cities():
+    api_url = 'https://api.api-ninjas.com/v1/city?min_population={}&limit=100'.format('1000000')
+    response = requests.get(api_url, headers={'X-Api-Key': '8UbplA20/DRBsYdkZtz2sw==Lty5K8snkj93nyuo'})
+    if response.status_code == requests.codes.ok:
+        cities = response.json()
+        return random.sample([city["name"] for city in cities], 5)
+    else:
+        print("Error:", response.status_code, response.text)
 
 def get_weather_data(url, params):
     try:
@@ -79,7 +89,7 @@ def home(request):
     image_url = get_city_images(city)
     day = datetime.date.today()
 
-    cities = ['London', 'Paris', 'Berlin', 'Madrid', 'Rome']  # Add your cities here
+    cities = get_random_cities()
     avg_temp = calculate_average_temperature(cities)
     min_city = find_coldest_city(cities)
 
