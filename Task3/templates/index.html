@@ -24,11 +24,9 @@
                     </div>
                 </form>
                 <div class="city_links">
-                    <a href="/weather/New York">New York</a>
-                    <a href="/weather/London">London</a>
-                    <a href="/weather/Paris">Paris</a>
-                    <a href="/weather/Tokyo">Tokyo</a>
-                    <a href="/weather/Sydney">Sydney</a>
+                    {% for city in random_cities %}
+                    <a href="/weather/{{city}}">{{ city }}</a>
+                    {% endfor %}
                 </div>
                 {% if error %}
                 <div class="alert alert-danger mt-3" role="alert">

@@ -1,7 +1,17 @@
 from flask import Flask, render_template, request, redirect
 import requests
+import random
 
 app = Flask(__name__)
+
+def get_random_cities():
+    api_url = 'https://api.api-ninjas.com/v1/city?min_population={}&limit=100'.format('1000000')
+    response = requests.get(api_url, headers={'X-Api-Key': '8UbplA20/DRBsYdkZtz2sw==Lty5K8snkj93nyuo'})
+    if response.status_code == requests.codes.ok:
+        cities = response.json()
+        return random.sample([city["name"] for city in cities], 5)
+    else:
+        print("Error:", response.status_code, response.text)
 
 def convert_to_celsius(temp_k):
     return round(temp_k - 273.15)
@@ -42,7 +52,7 @@ def weather(city=None):
         else:
             error = "Please enter a city name."
 
-    cities = ['New York', 'London', 'Paris', 'Tokyo', 'Sydney']
+    cities = get_random_cities()
     weather_data = {}
     for default_city in cities:
         result = get_weather(default_city)
@@ -59,14 +69,14 @@ def weather(city=None):
             error = "Please enter a valid city name."
         else:
             weather, temperature_c, humidity, temp_min, temp_max, icon_url, pressure, wind, feels_like = result
-            return render_template('index.html', city=city, weather=weather, temperature_c=temperature_c, humidity=humidity, temp_min=temp_min, temp_max=temp_max, icon_url=icon_url, wind=wind, pressure=pressure, feels_like=feels_like, coldest_city=coldest_city, avg_temperature=avg_temperature)
+            return render_template('index.html', city=city, weather=weather, temperature_c=temperature_c, humidity=humidity, temp_min=temp_min, temp_max=temp_max, icon_url=icon_url, wind=wind, pressure=pressure, feels_like=feels_like, coldest_city=coldest_city, avg_temperature=avg_temperature, random_cities=cities)
         
     
 
         print(f"Coldest City: {coldest_city}")
         print(f"Average Temperature: {avg_temperature}°C")
 
-    return render_template('index.html', error=error, coldest_city=coldest_city, avg_temperature=avg_temperature)
+    return render_template('index.html', error=error, coldest_city=coldest_city, avg_temperature=avg_temperature, random_cities=cities)
 
 if __name__ == '__main__':
     app.run(debug=True)

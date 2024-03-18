@@ -1,6 +1,16 @@
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout, QLabel, QLineEdit, QMessageBox
 import sys
 import requests
+import random
+
+def get_random_cities():
+    api_url = 'https://api.api-ninjas.com/v1/city?min_population={}&limit=100'.format('1000000')
+    response = requests.get(api_url, headers={'X-Api-Key': '8UbplA20/DRBsYdkZtz2sw==Lty5K8snkj93nyuo'})
+    if response.status_code == requests.codes.ok:
+        cities = response.json()
+        return random.sample([city["name"] for city in cities], 5)
+    else:
+        print("Error:", response.status_code, response.text)
 
 def get_weather(city):
     api_key = "22ef52c6707559f8d3fe948e2ef01fbb"

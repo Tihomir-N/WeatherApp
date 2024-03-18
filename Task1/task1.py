@@ -1,9 +1,7 @@
 import requests
 import random
 
-
-
-def get_cities():
+def get_random_cities():
     api_url = 'https://api.api-ninjas.com/v1/city?min_population={}&limit=100'.format('1000000')
     response = requests.get(api_url, headers={'X-Api-Key': '8UbplA20/DRBsYdkZtz2sw==Lty5K8snkj93nyuo'})
     if response.status_code == requests.codes.ok:
@@ -30,8 +28,7 @@ def get_weather(city):
 cities = []
 
 def get_random_cities_weather(num_cities=5):
-    cities = get_cities()
-    random_cities = random.sample(cities, num_cities)
+    random_cities = get_random_cities()
     weather_data = {}
     for city in random_cities:
         result = get_weather(city)
